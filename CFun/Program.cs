@@ -1,16 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Security.AccessControl;
 
-namespace CFun
+namespace FileSystemExample
 {
-    class Program
+    class FileExample
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Console.WriteLine("HelloWorld");
+            try
+            {
+                string FileName = @"c:\MyTest.txt";
+
+                Console.WriteLine("Encrypt " + FileName);
+
+                // Encrypt the file.
+                AddEncryption(FileName);
+
+                Console.WriteLine("Decrypt " + FileName);
+
+                // Decrypt the file.
+                RemoveEncryption(FileName);
+
+                Console.WriteLine("Done");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static void AddEncryption(string FileName)
+        {
+            // Create a new FileInfo object.
+            FileInfo fInfo = new FileInfo(FileName);
+            if (!fInfo.Exists)
+            {
+                //Create the file.
+                fInfo.Create();
+            }
+            // Add encryption.
+            fInfo.Encrypt();
+        }
+
+        public static void RemoveEncryption(string FileName)
+        {
+            // Create a new FileInfo object.
+            FileInfo fInfo = new FileInfo(FileName);
+            if (!fInfo.Exists)
+            {
+                //Create the file.
+                fInfo.Create();
+            }
+            // Remove encryption.
+            fInfo.Decrypt();
+
         }
     }
 }
